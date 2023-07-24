@@ -12,6 +12,7 @@ module.exports = {
       title: 'Tada',
     }),
   ],
+  devtool: 'inline-source-map',
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist')
