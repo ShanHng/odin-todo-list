@@ -1,0 +1,3 @@
+const projectViewFactory = (proj) => {
+    
+}

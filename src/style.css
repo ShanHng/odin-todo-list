@@ -1,0 +1,127 @@
+:root {
+  --color-red: rgb(214, 5, 5);
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+body {
+  padding: 3rem;
+}
+
+.todo-card-container {
+  width: 20vw;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 0.5rem lightgrey;
+  padding: 0.8rem;
+  padding-bottom: 0.5rem;
+}
+
+.todo-card-container:hover:not(:has(button:hover)):not(:has(input:hover)) {
+  background-color: rgb(201, 234, 247);
+  position: relative;
+}
+
+.todo-card-container:hover:not(:has(button:hover)):not(:has(input:hover))::before {
+  content: 'Click to expand or close!';
+  font-size: 0.7rem;
+  color: grey;
+  position: absolute;
+  top: -1rem;
+  padding: 0 0.5rem;
+}
+
+.todo-card-container:active:not(:has(button:hover)):not(:has(input:hover)) {
+  filter: brightness(0.8);
+}
+
+.todo-card-header {
+  padding: 0.5rem;
+  padding-top: 0;
+
+  display: grid;
+  gap: 0.2rem;
+}
+
+.todo-card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.todo-card-priority {
+  font-size: 0.6rem;
+  font-weight: bold;
+  color: white;
+  background-color: var(--color-red);
+  width: min-content;
+  padding: 0.2rem;
+  border-radius: 0.2rem;
+}
+
+.todo-card-footer {
+  display: grid;
+  gap: 0 0.5rem;
+  grid-template-columns: 1rem 1fr;
+  border-top: 0.1rem solid darkgray;
+  padding-top: 0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem; 
+  align-items: center;
+}
+
+.todo-card-due-date {
+  grid-column: 2 ;
+  font-size: 0.8rem;
+  display: inline-block;
+}
+
+.todo-card-status {
+  grid-column: 1;
+  grid-row: 1;
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+}
+
+.todo-card-remove-btn {
+  grid-column: 2;
+  grid-row: 2;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0.3rem;
+  border-radius: 0.2rem;
+  border: none;
+  font-size: 0.70rem;
+  position: relative;
+  left: 0.5rem;
+  justify-self: right;
+}
+
+.todo-card-remove-btn:hover {
+  filter: brightness(0.8);
+}
+
+.todo-card-desc {
+  font-size: 1rem;
+  padding: 0 0.5rem 0.5rem 0.5rem;
+  display: none;
+}
+
+.todo-card-desc.shown {
+  display: block;
+}
+
+.fa-clock {
+  color: lightgrey;
+}
+
+.fa-circle-check {
+  color: rgb(13, 228, 13);
+}
