@@ -11,6 +11,12 @@
     Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
+body {
+  display: grid;
+  grid-template-columns: 25vw 1fr;
+  height: 100vh;
+}
+
 .todo-card-container {
   width: 50vw;
   border-radius: 0.5rem;
@@ -194,10 +200,10 @@
 }
 
 .menu-container {
-  height: 100vh;
-  width: 25vw;
+  grid-column: 1;
   background-color: var(--color-skyblue);
   padding: 1rem;
+  box-sizing: border-box;
 }
 
 .menu-default-group-title,
@@ -263,4 +269,38 @@
 
 .menu-item-btn.shown {
   display: initial;
+}
+
+.proj-view-container {
+  margin: 2rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.proj-view-placeholder {
+  flex-grow: 1;
+  margin: 8rem;
+  padding: 3rem;
+  border: 0.5rem dashed lightgrey;
+  color: grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hidden {
+  display: none;
+}
+
+.proj-view-title {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.proj-view-card-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
