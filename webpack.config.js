@@ -9,7 +9,8 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Tada',
+      title: 'Tada!',
+      template: './src/index.html'
     }),
   ],
   devtool: 'inline-source-map',
