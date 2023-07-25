@@ -1,5 +1,7 @@
 :root {
   --color-red: rgb(214, 5, 5);
+  --color-skyblue: rgb(206, 230, 238);
+  --color-greenblue: rgba(0, 255, 149, 0.3);
 }
 
 * {
@@ -7,10 +9,6 @@
   margin: 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-}
-
-body {
-  padding: 3rem;
 }
 
 .todo-card-container {
@@ -72,12 +70,12 @@ body {
   border-top: 0.1rem solid darkgray;
   padding-top: 0.5rem;
   padding-left: 0.5rem;
-  padding-right: 0.5rem; 
+  padding-right: 0.5rem;
   align-items: center;
 }
 
 .todo-card-due-date {
-  grid-column: 2 ;
+  grid-column: 2;
   font-size: 0.8rem;
   display: inline-block;
 }
@@ -98,7 +96,7 @@ body {
   padding: 0.3rem;
   border-radius: 0.2rem;
   border: none;
-  font-size: 0.70rem;
+  font-size: 0.7rem;
   position: relative;
   left: 0.5rem;
   justify-self: right;
@@ -124,4 +122,145 @@ body {
 
 .fa-circle-check {
   color: rgb(13, 228, 13);
+}
+
+.site-icon {
+  display: flex;
+  justify-content: center;
+  font-size: 2rem;
+  font-family: serif;
+  font-weight: bold;
+  font-style: italic;
+  border: 0.2rem double black;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.site-icon:hover {
+  animation: rainbow 0.5s linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes rainbow {
+  100%,
+  0% {
+    color: rgb(255, 0, 0);
+    border-color: rgb(255, 0, 0);
+  }
+  8% {
+    color: rgb(255, 127, 0);
+    border-color: rgb(255, 127, 0);
+  }
+  16% {
+    color: rgb(255, 255, 0);
+    border-color: rgb(255, 255, 0);
+  }
+  25% {
+    color: rgb(127, 255, 0);
+    border-color: rgb(127, 255, 0);
+  }
+  33% {
+    color: rgb(0, 255, 0);
+    border-color: rgb(0, 255, 0);
+  }
+  41% {
+    color: rgb(0, 255, 127);
+    border-color: rgb(0, 255, 127);
+  }
+  50% {
+    color: rgb(0, 255, 255);
+    border-color: rgb(0, 255, 255);
+  }
+  58% {
+    color: rgb(0, 127, 255);
+    border-color: rgb(0, 127, 255);
+  }
+  66% {
+    color: rgb(0, 0, 255);
+    border-color: rgb(0, 0, 25);
+  }
+  75% {
+    color: rgb(127, 0, 255);
+    border-color: rgb(127, 0, 255);
+  }
+  83% {
+    color: rgb(255, 0, 255);
+    border-color: rgb(255, 0, 255);
+  }
+  91% {
+    color: rgb(255, 0, 127);
+    border-color: rgb(255, 0, 127);
+  }
+}
+
+.menu-container {
+  height: 100vh;
+  width: 25vw;
+  background-color: var(--color-skyblue);
+  padding: 1rem;
+}
+
+.menu-default-group-title,
+.menu-custom-group-header {
+  text-transform: uppercase;
+  font-size: small;
+  font-weight: bold;
+  padding-bottom: 0.2rem;
+}
+
+.menu-custom-group-header {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.menu-custom-group-btn {
+  border: none;
+  background-color: transparent;
+  font-size: 0.9rem;
+}
+
+.menu-custom-group-btn:hover,
+.menu-custom-group-btn.active {
+  filter: opacity(0.3);
+}
+
+.menu-default-group,
+.menu-custom-group {
+  padding-bottom: 0.5rem;
+  display: grid;
+  font-size: 1rem;
+}
+
+.menu-default-group {
+  border-bottom: 0.1rem solid grey;
+}
+
+.menu-item-container {
+  padding: 0.3rem 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.menu-item-container:hover:not(:has(button:hover)),
+.menu-item-container.selected {
+  background-color: var(--color-greenblue);
+}
+
+.menu-item-btn {
+  border: none;
+  background-color: transparent;
+  color: var(--color-red);
+  font-size: 0.9rem;
+  display: none;
+}
+
+.menu-item-btn:hover {
+  filter: opacity(0.5);
+}
+
+.menu-item-btn.shown {
+  display: initial;
 }
