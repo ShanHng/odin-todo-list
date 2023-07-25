@@ -1,8 +1,6 @@
 const todoCardFactory = todo => {
-  const FA_CHECK = '<i class="fa-solid fa-circle-check"> </i>'
-  const FA_CLOCK = '<i class="fa-solid fa-clock"> </i>'
   const FA_TRASH = '<i class="fa-solid fa-trash"> </i>'
-
+  
   const container = document.createElement('div')
   const header = document.createElement('div')
   const footer = document.createElement('div')
