@@ -1,4 +1,4 @@
-export const todoFactory = (title, desc, dueDate, priority) => {
+const todoFactory = (title, desc, dueDate, priority) => {
   let isDone = false
   const creationDate = Date.now()
 
@@ -23,7 +23,7 @@ export const todoFactory = (title, desc, dueDate, priority) => {
   }
 }
 
-export const projectFactory = (title, isDefault) => {
+const projectFactory = (title, isDefault) => {
   let todos = []
 
   return {
@@ -68,7 +68,7 @@ export const projectFactory = (title, isDefault) => {
   }
 }
 
-export const projectCatalogue = (() => {
+const projectCatalogue = (() => {
   let projects = []
 
   return {
@@ -78,7 +78,7 @@ export const projectCatalogue = (() => {
     },
     addTodoToProject (title, desc, dueDate, priority, projTitle) {
       const project = projects.filter(proj => proj.title === projTitle)[0]
-      project.addProject(title, desc, dueDate, priority)
+      project.addTodo(title, desc, dueDate, priority)
     },
     deleteProject (title) {
       projects = projects.filter(project => project.title !== title)
@@ -113,3 +113,5 @@ export const projectCatalogue = (() => {
     }
   }
 })()
+
+export default projectCatalogue
