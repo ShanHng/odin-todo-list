@@ -23,7 +23,7 @@ export const todoFactory = (title, desc, dueDate, priority) => {
   }
 }
 
-export const projectFactory = title => {
+export const projectFactory = (title, isDefault) => {
   let todos = []
 
   return {
@@ -55,6 +55,9 @@ export const projectFactory = title => {
       }
       return result
     },
+    isDefaultProject () {
+      return isDefault
+    },
     setTodoAsDone (boolean, title) {
       todos.forEach(todo => {
         if (todo.title === title) {
@@ -69,8 +72,8 @@ export const projectCatalogue = (() => {
   let projects = []
 
   return {
-    addProject (title) {
-      const newProject = projectFactory(title)
+    addProject (title, isDefault) {
+      const newProject = projectFactory(title, isDefault)
       projects.push(newProject)
     },
     addTodoToProject (title, desc, dueDate, priority, projTitle) {
@@ -94,9 +97,12 @@ export const projectCatalogue = (() => {
           },
           get todos () {
             return p.getAllReadOnlyTodos()
-          }
+          },
+          isDefaultProject: p.isDefaultProject
         }
+        result.push(readOnlyProject)
       }
+      return result
     },
     setTodoAsDone (boolean, title, projTitle) {
       projects.forEach(proj => {
