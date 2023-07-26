@@ -71,9 +71,14 @@ const projectFactory = (title, isDefault) => {
 const projectCatalogue = (() => {
   let projects = []
 
+  // initialize default projects
+  const tasksProject = projectFactory('Tasks', true)
+  const dueThisWeekProject = projectFactory('Due this week', true)
+  projects.push(tasksProject, dueThisWeekProject)
+
   return {
-    addProject (title, isDefault) {
-      const newProject = projectFactory(title, isDefault)
+    addProject (title) {
+      const newProject = projectFactory(title, false)
       projects.push(newProject)
     },
     addTodoToProject (title, desc, dueDate, priority, projTitle) {
@@ -110,6 +115,18 @@ const projectCatalogue = (() => {
           proj.setIsDone(boolean, title)
         }
       })
+    },
+    getReadOnlyProject (projTitle) {
+      const project = projects.filter(proj => proj.title === projTitle)[0]
+      return {
+        get title () {
+          return project.title
+        },
+        get todos () {
+          return project.getAllReadOnlyTodos()
+        },
+        isDefaultProject: project.isDefaultProject
+      }
     }
   }
 })()
