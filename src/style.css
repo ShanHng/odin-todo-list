@@ -271,6 +271,10 @@ body {
   display: initial;
 }
 
+.menu-item-title-input {
+  padding: 0.2rem;
+}
+
 .proj-view-container {
   margin: 2rem;
   flex-grow: 1;
