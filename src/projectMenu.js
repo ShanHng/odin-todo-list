@@ -1,25 +1,52 @@
 import projectViewController from './projectView'
 
-const menuItemFactory = project => {
+const menuItemFactory = (project, isEditable) => {
   const FA_MINUS = '<i class="fa-solid fa-minus-circle"></i>'
 
   const container = document.createElement('div')
   const titleDisplay = document.createElement('div')
   const removeButton = document.createElement('button')
-
-  container.className = 'menu-item-container'
-  titleDisplay.className = 'menu-item-title'
-  removeButton.className = 'menu-item-btn'
-
-  titleDisplay.textContent = project.title
-  removeButton.innerHTML = FA_MINUS
+  const newProjectForm = document.createElement('form')
+  const titleInput = document.createElement('input')
+  const hiddenSubmitElement = document.createElement('input')
 
   function handleClickOnRemoveBtn () {
     projectMenuController.toggleSettingsState()
   }
-  removeButton.addEventListener('click', handleClickOnRemoveBtn)
 
-  container.append(titleDisplay, removeButton)
+  function initializeEditableMenuItem () {
+    // hide title display and show the input field
+    titleDisplay.classList.add('hidden')
+    newProjectForm.classList.remove('hidden')
+  }
+
+  function handleSubmitNewProjectForm (event) {
+    event.preventDefault()
+    titleDisplay.classList.remove('hidden')
+    newProjectForm.classList.add('hidden')
+    titleDisplay.textContent = titleInput.value
+  }
+
+  container.className = 'menu-item-container'
+  newProjectForm.className = 'menu-item-new-proj-form hidden'
+  titleInput.className = 'menu-item-title-input'
+  hiddenSubmitElement.className = 'menu-item-submit-element hidden'
+  removeButton.className = 'menu-item-btn'
+
+  removeButton.innerHTML = FA_MINUS
+  titleInput.type = 'text'
+  hiddenSubmitElement.type = 'submit'
+  removeButton.addEventListener('click', handleClickOnRemoveBtn)
+  newProjectForm.addEventListener('submit', handleSubmitNewProjectForm)
+
+  if (isEditable) {
+    initializeEditableMenuItem()
+  } else {
+    titleDisplay.textContent = project.title
+  }
+
+  newProjectForm.append(titleInput, hiddenSubmitElement)
+  container.append(titleDisplay, newProjectForm, removeButton)
 
   return {
     getMenuItem () {
@@ -82,6 +109,13 @@ const projectMenuController = (() => {
     toggleSettingsState()
   }
 
+  function handleClickOnAddProject (e) {
+    e.stopPropagation()
+    const newMenuItem = menuItemFactory(null, true)
+    menuItems.push(newMenuItem)
+    customGroup.append(newMenuItem.getMenuItem())
+  }
+
   function selectMenuItem (menuItem, projectToDisplay) {
     if (selectedItem) {
       selectedItem.toggleSelectedState()
@@ -92,6 +126,7 @@ const projectMenuController = (() => {
   }
 
   settingsButton.addEventListener('click', handleClickOnSettings)
+  addProjectButton.addEventListener('click', handleClickOnAddProject)
 
   customGroupHeader.append(settingsButton, addProjectButton)
   sidebar.append(
@@ -108,7 +143,7 @@ const projectMenuController = (() => {
     loadMenuItems (projects) {
       menuItems = []
       for (let p of projects) {
-        const menuItem = menuItemFactory(p)
+        const menuItem = menuItemFactory(p, false)
         menuItem.attachClickHandler(() => selectMenuItem(menuItem, p))
         menuItems.push(menuItem)
         if (p.isDefaultProject()) {
