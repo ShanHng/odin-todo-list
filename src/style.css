@@ -250,8 +250,8 @@ body {
   justify-content: space-between;
 }
 
-.menu-item-container:hover:not(:has(button:hover)),
-.menu-item-container.selected {
+.menu-item-container:not(:has(button:hover)):has(form.hidden):hover,
+.menu-item-container.selected:has(form.hidden) {
   background-color: var(--color-greenblue);
 }
 
@@ -273,6 +273,7 @@ body {
 
 .menu-item-title-input {
   padding: 0.2rem;
+  width: 95%;
 }
 
 .proj-view-container {

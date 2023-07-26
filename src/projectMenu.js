@@ -1,3 +1,4 @@
+import mainController from './mainController'
 import projectViewController from './projectView'
 
 const menuItemFactory = (project, isEditable) => {
@@ -20,11 +21,21 @@ const menuItemFactory = (project, isEditable) => {
     newProjectForm.classList.remove('hidden')
   }
 
+  function handleClickOnForm (e) {
+    e.stopPropagation()
+  }
+
   function handleSubmitNewProjectForm (event) {
     event.preventDefault()
     titleDisplay.classList.remove('hidden')
     newProjectForm.classList.add('hidden')
-    titleDisplay.textContent = titleInput.value
+    if (titleInput.value) {
+      titleDisplay.textContent = titleInput.value
+      mainController.createNewProject(titleInput.value)
+    } else {
+      projectMenuController.undoAddedMenuItem()
+    }
+    projectMenuController.toggleAddBtnState()
   }
 
   container.className = 'menu-item-container'
@@ -37,6 +48,8 @@ const menuItemFactory = (project, isEditable) => {
   titleInput.type = 'text'
   hiddenSubmitElement.type = 'submit'
   removeButton.addEventListener('click', handleClickOnRemoveBtn)
+  // to prevent triggering action of selecting the menu item
+  newProjectForm.addEventListener('click', handleClickOnForm)
   newProjectForm.addEventListener('submit', handleSubmitNewProjectForm)
 
   if (isEditable) {
@@ -49,6 +62,9 @@ const menuItemFactory = (project, isEditable) => {
   container.append(titleDisplay, newProjectForm, removeButton)
 
   return {
+    get title () {
+      return titleDisplay.textContent
+    },
     getMenuItem () {
       return container
     },
@@ -79,6 +95,7 @@ const projectMenuController = (() => {
 
   let menuItems = []
   let selectedItem = ''
+  let newMenuItem = ''
 
   icon.className = 'site-icon'
   sidebar.className = 'menu-container'
@@ -104,25 +121,55 @@ const projectMenuController = (() => {
     }
   }
 
+  function toggleAddBtnState () {
+    addProjectButton.classList.toggle('active')
+  }
+
   function handleClickOnSettings (e) {
     e.stopPropagation()
     toggleSettingsState()
   }
 
   function handleClickOnAddProject (e) {
-    e.stopPropagation()
-    const newMenuItem = menuItemFactory(null, true)
-    menuItems.push(newMenuItem)
-    customGroup.append(newMenuItem.getMenuItem())
+    const isBtnActive = addProjectButton.classList.contains('active')
+    if (isBtnActive && !newMenuItem.title) {
+      undoAddedMenuItem()
+    } else if (!isBtnActive) {
+      e.stopPropagation()
+      newMenuItem = menuItemFactory(null, true)
+      newMenuItem.attachClickHandler(event =>
+        handleClickOnContainer(event, newMenuItem)
+      )
+      menuItems.push(newMenuItem)
+      customGroup.append(newMenuItem.getMenuItem())
+    }
+    toggleAddBtnState()
   }
 
-  function selectMenuItem (menuItem, projectToDisplay) {
+  function undoAddedMenuItem () {
+    customGroup.removeChild(newMenuItem.getMenuItem())
+    menuItems.pop()
+  }
+
+  function handleClickOnContainer (event, menuItem) {
+    if (
+      addProjectButton.classList.contains('active') &&
+      event.target === newMenuItem.getMenuItem()
+    ) {
+      return
+    }
+    selectMenuItem(menuItem)
+  }
+
+  function selectMenuItem (menuItem) {
     if (selectedItem) {
       selectedItem.toggleSelectedState()
     }
     selectedItem = menuItem
     menuItem.toggleSelectedState()
-    projectViewController.displayProject(projectToDisplay)
+
+    const selectedProject = mainController.getProject(menuItem.title)
+    projectViewController.displayProject(selectedProject)
   }
 
   settingsButton.addEventListener('click', handleClickOnSettings)
@@ -144,7 +191,9 @@ const projectMenuController = (() => {
       menuItems = []
       for (let p of projects) {
         const menuItem = menuItemFactory(p, false)
-        menuItem.attachClickHandler(() => selectMenuItem(menuItem, p))
+        menuItem.attachClickHandler(event =>
+          handleClickOnContainer(event, menuItem)
+        )
         menuItems.push(menuItem)
         if (p.isDefaultProject()) {
           defaultGroup.append(menuItem.getMenuItem())
@@ -153,7 +202,9 @@ const projectMenuController = (() => {
         }
       }
     },
-    toggleSettingsState
+    toggleSettingsState,
+    toggleAddBtnState,
+    undoAddedMenuItem
   }
 })()
 
