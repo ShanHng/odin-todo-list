@@ -11,8 +11,11 @@ const menuItemFactory = (project, isEditable) => {
   const titleInput = document.createElement('input')
   const hiddenSubmitElement = document.createElement('input')
 
-  function handleClickOnRemoveBtn () {
+  function handleClickOnRemoveBtn (event) {
+    event.stopPropagation()
     projectMenuController.toggleSettingsState()
+    projectMenuController.removeMenuItem(container)
+    mainController.deleteProject(titleDisplay.textContent)
   }
 
   function initializeEditableMenuItem () {
@@ -47,6 +50,7 @@ const menuItemFactory = (project, isEditable) => {
   removeButton.innerHTML = FA_MINUS
   titleInput.type = 'text'
   hiddenSubmitElement.type = 'submit'
+
   removeButton.addEventListener('click', handleClickOnRemoveBtn)
   // to prevent triggering action of selecting the menu item
   newProjectForm.addEventListener('click', handleClickOnForm)
@@ -72,6 +76,9 @@ const menuItemFactory = (project, isEditable) => {
       container.addEventListener('click', handler)
     },
     toggleButtonVisibility () {
+      if (titleDisplay.textContent.length === 0) {
+        return
+      }
       removeButton.classList.toggle('shown')
     },
     toggleSelectedState () {
@@ -204,7 +211,10 @@ const projectMenuController = (() => {
     },
     toggleSettingsState,
     toggleAddBtnState,
-    undoAddedMenuItem
+    undoAddedMenuItem,
+    removeMenuItem(menuItem) {
+      customGroup.removeChild(menuItem)
+    }
   }
 })()
 

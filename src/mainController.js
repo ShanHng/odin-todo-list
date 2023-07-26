@@ -16,10 +16,15 @@ const mainController = (() => {
         projectMenuController.loadMenuItems(projects)
     } 
     
+    function deleteProject(projTitle) {
+        projectCatalogue.deleteProject(projTitle)
+    }
+
     return {
         initialize,
         createNewProject,
-        getProject
+        getProject,
+        deleteProject
     }
 })();
 
