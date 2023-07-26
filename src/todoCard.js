@@ -26,7 +26,7 @@ const todoCardFactory = (todo, projTitle) => {
 
   titleDisplay.textContent = todo.title
   statusDisplay.setAttribute('type', 'checkbox')
-  statusDisplay.setAttribute('checked', todo.isDone)
+  statusDisplay.checked = todo.isDone
   descDisplay.textContent = todo.desc
   dueDateDisplay.textContent = `Due date: ${todo.dueDate}`
   priorityDisplay.textContent = todo.priority
@@ -44,6 +44,7 @@ const todoCardFactory = (todo, projTitle) => {
 
   function handleClickOnCheckbox (event) {
     event.stopPropagation()
+    mainController.setTodoAsDone(!todo.isDone, todo.title, projTitle)
   }
 
   statusDisplay.addEventListener('click', handleClickOnCheckbox)

@@ -24,12 +24,18 @@ const mainController = (() => {
         projectCatalogue.deleteTodoFromProject(todoTitle, projTitle)
     }
 
+    function setTodoAsDone(boolean, todoTitle, projTitle) {
+        console.log(projectCatalogue.getReadOnlyProject('Tasks').todos[0])
+        projectCatalogue.setTodoAsDone(boolean, todoTitle, projTitle)
+        console.log(projectCatalogue.getReadOnlyProject('Tasks').todos[0])
+    }
     return {
         initialize,
         createNewProject,
         getProject,
         deleteProject,
-        deleteTodoFromProject
+        deleteTodoFromProject,
+        setTodoAsDone
     }
 })();
 
