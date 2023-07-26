@@ -62,8 +62,6 @@ const projectFactory = (title, isDefault) => {
     setTodoAsDone (boolean, title) {
       todos.forEach(todo => {
         if (todo.title === title) {
-          console.log(todo.title)
-          console.log(title)
           todo.setIsDone(boolean)
         }
       })

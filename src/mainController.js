@@ -25,9 +25,7 @@ const mainController = (() => {
     }
 
     function setTodoAsDone(boolean, todoTitle, projTitle) {
-        console.log(projectCatalogue.getReadOnlyProject('Tasks').todos[0])
         projectCatalogue.setTodoAsDone(boolean, todoTitle, projTitle)
-        console.log(projectCatalogue.getReadOnlyProject('Tasks').todos[0])
     }
     return {
         initialize,
