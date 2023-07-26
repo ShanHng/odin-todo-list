@@ -46,10 +46,13 @@ const projectViewController = (() => {
       displayPlaceholder(false)
       titleDisplay.textContent = project.title
       for (let todo of project.todos) {
-        const todoCard = todoCardFactory(todo)
+        const todoCard = todoCardFactory(todo, project.title)
         todoCards.push(todoCard)
         todoCardContainer.append(todoCard)
       }
+    },
+    removeChildFromTodoCardContainer(childNode) {
+      todoCardContainer.removeChild(childNode)
     }
   }
 })()

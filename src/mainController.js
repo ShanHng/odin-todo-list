@@ -20,11 +20,16 @@ const mainController = (() => {
         projectCatalogue.deleteProject(projTitle)
     }
 
+    function deleteTodoFromProject(todoTitle, projTitle) {
+        projectCatalogue.deleteTodoFromProject(todoTitle, projTitle)
+    }
+
     return {
         initialize,
         createNewProject,
         getProject,
-        deleteProject
+        deleteProject,
+        deleteTodoFromProject
     }
 })();
 

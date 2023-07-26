@@ -1,4 +1,7 @@
-const todoCardFactory = todo => {
+import mainController from "./mainController"
+import projectViewController from "./projectView"
+
+const todoCardFactory = (todo, projTitle) => {
   const FA_TRASH = '<i class="fa-solid fa-trash"> </i>'
   
   const container = document.createElement('div')
@@ -35,6 +38,8 @@ const todoCardFactory = todo => {
 
   function handleClickOnRemove (event) {
     event.stopPropagation()
+    mainController.deleteTodoFromProject(todo.title, projTitle)
+    projectViewController.removeChildFromTodoCardContainer(container)
   }
 
   function handleClickOnCheckbox (event) {
