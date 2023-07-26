@@ -1,4 +1,6 @@
-const projectMenuItemFactory = title => {
+import projectViewController from './projectView'
+
+const menuItemFactory = project => {
   const FA_MINUS = '<i class="fa-solid fa-minus-circle"></i>'
 
   const container = document.createElement('div')
@@ -9,20 +11,28 @@ const projectMenuItemFactory = title => {
   titleDisplay.className = 'menu-item-title'
   removeButton.className = 'menu-item-btn'
 
-  titleDisplay.textContent = title
+  titleDisplay.textContent = project.title
   removeButton.innerHTML = FA_MINUS
 
-  function handleRemove () {
+  function handleClickOnRemoveBtn () {
     projectMenuController.toggleSettingsState()
   }
-  removeButton.addEventListener('click', handleRemove)
+  removeButton.addEventListener('click', handleClickOnRemoveBtn)
 
   container.append(titleDisplay, removeButton)
 
   return {
-    element: container,
+    getMenuItem () {
+      return container
+    },
+    attachClickHandler (handler) {
+      container.addEventListener('click', handler)
+    },
     toggleButtonVisibility () {
       removeButton.classList.toggle('shown')
+    },
+    toggleSelectedState () {
+      container.classList.toggle('selected')
     }
   }
 }
@@ -41,6 +51,7 @@ const projectMenuController = (() => {
   const settingsButton = document.createElement('button')
 
   let menuItems = []
+  let selectedItem = ''
 
   icon.className = 'site-icon'
   sidebar.className = 'menu-container'
@@ -71,10 +82,18 @@ const projectMenuController = (() => {
     toggleSettingsState()
   }
 
+  function selectMenuItem (menuItem, projectToDisplay) {
+    if (selectedItem) {
+      selectedItem.toggleSelectedState()
+    }
+    selectedItem = menuItem
+    menuItem.toggleSelectedState()
+    projectViewController.displayProject(projectToDisplay)
+  }
+
   settingsButton.addEventListener('click', handleClickOnSettings)
 
   customGroupHeader.append(settingsButton, addProjectButton)
-
   sidebar.append(
     icon,
     defaultGroupTitle,
@@ -89,12 +108,13 @@ const projectMenuController = (() => {
     loadMenuItems (projects) {
       menuItems = []
       for (let p of projects) {
-        const menuItem = projectMenuItemFactory(p.title)
+        const menuItem = menuItemFactory(p)
+        menuItem.attachClickHandler(() => selectMenuItem(menuItem, p))
         menuItems.push(menuItem)
         if (p.isDefaultProject()) {
-          defaultGroup.append(menuItem.element)
+          defaultGroup.append(menuItem.getMenuItem())
         } else {
-          customGroup.append(menuItem.element)
+          customGroup.append(menuItem.getMenuItem())
         }
       }
     },
