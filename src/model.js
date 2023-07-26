@@ -15,8 +15,9 @@ const todoFactory = (title, desc, dueDate, priority) => {
     get priority () {
       return priority
     },
-    isDone,
-    creationDate,
+    get isDone () {
+      return isDone
+    },
     setIsDone: function (boolean) {
       isDone = boolean
     }
@@ -61,6 +62,8 @@ const projectFactory = (title, isDefault) => {
     setTodoAsDone (boolean, title) {
       todos.forEach(todo => {
         if (todo.title === title) {
+          console.log(todo.title)
+          console.log(title)
           todo.setIsDone(boolean)
         }
       })
@@ -112,7 +115,7 @@ const projectCatalogue = (() => {
     setTodoAsDone (boolean, title, projTitle) {
       projects.forEach(proj => {
         if (proj.title === projTitle) {
-          proj.setIsDone(boolean, title)
+          proj.setTodoAsDone(boolean, title)
         }
       })
     },
