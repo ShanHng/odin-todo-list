@@ -1,45 +1,58 @@
-import projectCatalogue from "./model";
-import projectMenuController from "./projectMenu";
+import projectCatalogue from './model'
+import newTodoModal from './newTodoModal'
+import projectMenuController from './projectMenu'
+import projectViewController from './projectView'
 
 const mainController = (() => {
+  function createNewProject (projTitle) {
+    projectCatalogue.addProject(projTitle)
+  }
 
-    function createNewProject (projTitle) {
-        projectCatalogue.addProject(projTitle)
-    }
+  function getProject (projTitle) {
+    return projectCatalogue.getReadOnlyProject(projTitle)
+  }
 
-    function getProject (projTitle) {
-        return projectCatalogue.getReadOnlyProject(projTitle)
-    }
+  function initialize () {
+    const projects = projectCatalogue.getAllReadOnlyProject()
+    projectMenuController.loadMenuItems(projects)
+  }
 
-    function initialize() {
-        const projects = projectCatalogue.getAllReadOnlyProject()
-        projectMenuController.loadMenuItems(projects)
-    } 
-    
-    function deleteProject(projTitle) {
-        projectCatalogue.deleteProject(projTitle)
-    }
+  function run () {
+    const body = document.querySelector('body')
 
-    function deleteTodoFromProject(todoTitle, projTitle) {
-        projectCatalogue.deleteTodoFromProject(todoTitle, projTitle)
-    }
+    body.append(
+      projectMenuController.getProjectMenu(),
+      projectViewController.getProjectView(),
+      newTodoModal
+    )
+    projectCatalogue.setUpDefault()
+    initialize()
+  }
 
-    function setTodoAsDone(boolean, todoTitle, projTitle) {
-        projectCatalogue.setTodoAsDone(boolean, todoTitle, projTitle)
-    }
+  function deleteProject (projTitle) {
+    projectCatalogue.deleteProject(projTitle)
+  }
 
-    function addNewTodoToProject(title, desc, dueDate, priority, projTitle) {
-        projectCatalogue.addTodoToProject(title, desc, dueDate, priority, projTitle)
-    }
-    return {
-        initialize,
-        createNewProject,
-        getProject,
-        deleteProject,
-        deleteTodoFromProject,
-        setTodoAsDone,
-        addNewTodoToProject
-    }
-})();
+  function deleteTodoFromProject (todoTitle, projTitle) {
+    projectCatalogue.deleteTodoFromProject(todoTitle, projTitle)
+  }
+
+  function setTodoAsDone (boolean, todoTitle, projTitle) {
+    projectCatalogue.setTodoAsDone(boolean, todoTitle, projTitle)
+  }
+
+  function addNewTodoToProject (title, desc, dueDate, priority, projTitle) {
+    projectCatalogue.addTodoToProject(title, desc, dueDate, priority, projTitle)
+  }
+  return {
+    run,
+    createNewProject,
+    getProject,
+    deleteProject,
+    deleteTodoFromProject,
+    setTodoAsDone,
+    addNewTodoToProject
+  }
+})()
 
 export default mainController

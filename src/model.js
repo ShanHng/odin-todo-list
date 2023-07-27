@@ -117,6 +117,34 @@ const projectCatalogue = (() => {
         }
       })
     },
+    setUpDefault () {
+      projectCatalogue.addProject('Example Project')
+
+      const projects = projectCatalogue.getAllReadOnlyProject()
+      const project = projects[0]
+
+      projectCatalogue.addTodoToProject(
+        'Example 1',
+        'Bla bla bla',
+        '2023/09/13',
+        'HIGH',
+        project.title
+      )
+      projectCatalogue.addTodoToProject(
+        'Example 2',
+        'Bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla',
+        '16/10/2023',
+        'MED',
+        project.title
+      ),
+        projectCatalogue.addTodoToProject(
+          'Example 3',
+          'Bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla',
+          '16/10/2024',
+          'LOW',
+          project.title
+        )
+    },
     getReadOnlyProject (projTitle) {
       const project = projects.filter(proj => proj.title === projTitle)[0]
       return {
