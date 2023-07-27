@@ -295,6 +295,22 @@ body {
   align-items: center;
 }
 
+.proj-view-add-todo-btn {
+  z-index: 25;
+  position: fixed;
+  right: 10vh;
+  bottom: 5vh;
+  border: none;
+  font-size: 4rem;
+  width: 3rem;
+  color: darkblue;
+  background-color: transparent;
+}
+
+.proj-view-add-todo-btn:hover {
+  filter: opacity(0.5);
+}
+
 .hidden {
   display: none;
 }
@@ -320,13 +336,13 @@ body {
   left: 0;
   width: 100vw;
   height: 100vh;
+  z-index: 50;
 }
 
 #new-todo-form {
   width: 70vw;
   border: 0.2rem solid darkblue;
   border-radius: 0.5rem;
-  position: absolute;
   background-color: var(--color-skyblue);
 }
 
