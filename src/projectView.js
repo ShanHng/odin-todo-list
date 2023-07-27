@@ -1,3 +1,4 @@
+import newTodoModal from './newTodoModal'
 import todoCardFactory from './todoCard'
 
 const projectViewController = (() => {
@@ -21,7 +22,7 @@ const projectViewController = (() => {
   addTodoButton.className = 'proj-view-add-todo-btn'
 
   placeholder.textContent = PLACEHOLDER_MESSAGE_PROMPT_ACTION
-  addTodoButton.innerHTML = FA_PLUS_CIRCLE;
+  addTodoButton.innerHTML = FA_PLUS_CIRCLE
 
   function displayPlaceholder (isVisible) {
     if (isVisible) {
@@ -32,6 +33,11 @@ const projectViewController = (() => {
     todoCardContainer.classList.toggle('hidden', isVisible)
   }
 
+  function handleClickOnNewTodo () {
+    newTodoModal.classList.toggle('hidden')
+  }
+
+  addTodoButton.addEventListener('click', handleClickOnNewTodo)
   container.append(placeholder, titleDisplay, todoCardContainer, addTodoButton)
 
   return {

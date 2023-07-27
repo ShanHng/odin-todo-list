@@ -311,10 +311,6 @@ body {
   filter: opacity(0.5);
 }
 
-.hidden {
-  display: none;
-}
-
 .proj-view-title {
   font-size: 2rem;
   font-weight: bold;
@@ -395,3 +391,8 @@ body {
   gap: 2rem;
   margin-bottom: 1.5rem;
 }
+
+.hidden {
+  display: none;
+}
+

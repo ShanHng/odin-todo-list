@@ -18,7 +18,7 @@ const newTodoModal = (() => {
   const submitBtn = document.createElement('button')
   const cancelBtn = document.createElement('button')
 
-  backdrop.className = 'new-todo-form-backdrop'
+  backdrop.className = 'new-todo-form-backdrop hidden'
   form.id = 'new-todo-form'
   formTitle.className = 'new-todo-form-title'
   formFieldContainer.className = 'new-todo-form-fields'
@@ -63,7 +63,24 @@ const newTodoModal = (() => {
 
   function handleSubmitForm (e) {
     e.preventDefault()
+    backdrop.classList.toggle('hidden')
+    resetFields()
   }
+
+  function handleClickOnCancel () {
+    backdrop.classList.toggle('hidden')
+    resetFields()
+  }
+
+  function resetFields() {
+    titleInput.value = ''
+    dueDateInput.value = ''
+    priorityInput.value = 'LOW'
+    descInput.value = descInput.defaultValue
+  }
+
+  form.addEventListener('submit', handleSubmitForm)
+  cancelBtn.addEventListener('click', handleClickOnCancel)
 
   priorityInput.append(priorityValueLow, priorityValueMed, priorityValueHigh)
   buttonContainer.append(cancelBtn, submitBtn)
