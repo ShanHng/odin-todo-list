@@ -1,4 +1,7 @@
-const newTodoModal = (() => {
+import mainController from './mainController'
+import projectViewController from './projectView'
+
+const newTodoModal = (projTitle => {
   const backdrop = document.createElement('div')
   const form = document.createElement('form')
   const formTitle = document.createElement('div')
@@ -64,7 +67,19 @@ const newTodoModal = (() => {
   function handleSubmitForm (e) {
     e.preventDefault()
     backdrop.classList.toggle('hidden')
+    const currProjTitle = projectViewController.getDisplayedProjTitle()
+    mainController.addNewTodoToProject(
+      titleInput.value,
+      descInput.value,
+      dueDateInput.value,
+      priorityInput.value,
+      currProjTitle
+    )
     resetFields()
+
+    // redraw project view
+    const updatedProject = mainController.getProject(currProjTitle)
+    projectViewController.displayProject(updatedProject)
   }
 
   function handleClickOnCancel () {
@@ -72,7 +87,7 @@ const newTodoModal = (() => {
     resetFields()
   }
 
-  function resetFields() {
+  function resetFields () {
     titleInput.value = ''
     dueDateInput.value = ''
     priorityInput.value = 'LOW'

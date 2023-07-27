@@ -14,6 +14,7 @@ const projectViewController = (() => {
   const addTodoButton = document.createElement('button')
 
   let todoCards = []
+  let projTitle = ''
 
   container.className = 'proj-view-container'
   placeholder.className = 'proj-view-placeholder visible'
@@ -25,9 +26,8 @@ const projectViewController = (() => {
   addTodoButton.innerHTML = FA_PLUS_CIRCLE
 
   function displayPlaceholder (isVisible) {
-    if (isVisible) {
-      todoCardContainer.innerHTML = ''
-    }
+    todoCards = []
+    todoCardContainer.innerHTML = ''
     placeholder.classList.toggle('hidden', !isVisible)
     titleDisplay.classList.toggle('hidden', isVisible)
     todoCardContainer.classList.toggle('hidden', isVisible)
@@ -45,6 +45,8 @@ const projectViewController = (() => {
       return container
     },
     displayProject (project) {
+      projTitle = project.title
+
       // cannot use !project.todos as a check because an empty array in javascript is truthy!
       if (project.todos.length === 0) {
         displayPlaceholder(true)
@@ -63,6 +65,9 @@ const projectViewController = (() => {
     },
     removeChildFromTodoCardContainer (childNode) {
       todoCardContainer.removeChild(childNode)
+    },
+    getDisplayedProjTitle () {
+      return projTitle
     }
   }
 })()

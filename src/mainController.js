@@ -27,13 +27,18 @@ const mainController = (() => {
     function setTodoAsDone(boolean, todoTitle, projTitle) {
         projectCatalogue.setTodoAsDone(boolean, todoTitle, projTitle)
     }
+
+    function addNewTodoToProject(title, desc, dueDate, priority, projTitle) {
+        projectCatalogue.addTodoToProject(title, desc, dueDate, priority, projTitle)
+    }
     return {
         initialize,
         createNewProject,
         getProject,
         deleteProject,
         deleteTodoFromProject,
-        setTodoAsDone
+        setTodoAsDone,
+        addNewTodoToProject
     }
 })();
 
