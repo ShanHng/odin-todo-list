@@ -1,9 +1,9 @@
-import mainController from "./mainController"
-import projectViewController from "./projectView"
+import mainController from './mainController'
+import projectViewController from './projectView'
 
 const todoCardFactory = (todo, projTitle) => {
   const FA_TRASH = '<i class="fa-solid fa-trash"> </i>'
-  
+
   const container = document.createElement('div')
   const header = document.createElement('div')
   const footer = document.createElement('div')
@@ -45,6 +45,17 @@ const todoCardFactory = (todo, projTitle) => {
   function handleClickOnCheckbox (event) {
     event.stopPropagation()
     mainController.setTodoAsDone(!todo.isDone, todo.title, projTitle)
+  }
+
+  switch (todo.priority) {
+    case 'HIGH':
+      priorityDisplay.classList.add('high')
+      break
+    case 'MED':
+      priorityDisplay.classList.add('med')
+      break
+    case 'LOW':
+      priorityDisplay.classList.add('low')
   }
 
   statusDisplay.addEventListener('click', handleClickOnCheckbox)

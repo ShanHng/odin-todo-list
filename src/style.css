@@ -63,7 +63,6 @@ body {
   font-size: 0.6rem;
   font-weight: bold;
   color: white;
-  background-color: var(--color-red);
   width: min-content;
   padding: 0.2rem;
   border-radius: 0.2rem;
@@ -396,3 +395,14 @@ body {
   display: none;
 }
 
+.high {
+  background-color: var(--color-red);
+}
+
+.med {
+  background-color: orange;
+}
+
+.low {
+  background-color: green;
+}
