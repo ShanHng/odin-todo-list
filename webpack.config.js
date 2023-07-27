@@ -2,21 +2,21 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
+  mode: 'development',
   entry: {
     index: './src/index.js',
-    model: './src/model.js',
-    todoCard: './src/todoCard.js'
   },
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Tada!',
-      template: './src/index.html'
+      template: './src/index.html',
     }),
   ],
   devtool: 'inline-source-map',
   output: {
     filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'dist'),
+    clean: true
   },
   module: {
     rules: [
