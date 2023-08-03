@@ -72,14 +72,9 @@ const projectFactory = (title, isDefault) => {
 const projectCatalogue = (() => {
   let projects = []
 
-  // initialize default projects
-  const tasksProject = projectFactory('Tasks', true)
-  const dueThisWeekProject = projectFactory('Due this week', true)
-  projects.push(tasksProject, dueThisWeekProject)
-
   return {
-    addProject (title) {
-      const newProject = projectFactory(title, false)
+    addProject (title, isDefault) {
+      const newProject = projectFactory(title, isDefault)
       projects.push(newProject)
     },
     addTodoToProject (title, desc, dueDate, priority, projTitle) {
@@ -104,7 +99,9 @@ const projectCatalogue = (() => {
           get todos () {
             return p.getAllReadOnlyTodos()
           },
-          isDefaultProject: p.isDefaultProject
+          get isDefaultProject () {
+            return p.isDefaultProject()
+          }
         }
         result.push(readOnlyProject)
       }
@@ -118,7 +115,9 @@ const projectCatalogue = (() => {
       })
     },
     setUpDefault () {
-      projectCatalogue.addProject('Example Project')
+      projectCatalogue.addProject('Tasks', true)
+      projectCatalogue.addProject('Due this week', true)
+      projectCatalogue.addProject('Example Project', false)
 
       const projects = projectCatalogue.getAllReadOnlyProject()
       const project = projects[0]
@@ -155,6 +154,24 @@ const projectCatalogue = (() => {
           return project.getAllReadOnlyTodos()
         },
         isDefaultProject: project.isDefaultProject
+      }
+    },
+    toJSON() {
+      return this.getAllReadOnlyProject()
+    },
+    load (arrayData) {
+      for (let obj of arrayData) {
+        const projTitle = obj['title']
+        const projIsDefault = obj['isDefaultProject']
+        this.addProject(projTitle, projIsDefault)
+        const todos = obj['todos']
+        for (let todo of todos) {
+          const { title, desc, dueDate, priority, isDone } = todo
+          this.addTodoToProject(title, desc, dueDate, priority, projTitle)
+          if (isDone) {
+            this.setTodoAsDone(true, title, projTitle)
+          }
+        }
       }
     }
   }
