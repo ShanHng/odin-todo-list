@@ -202,7 +202,7 @@ const projectMenuController = (() => {
           handleClickOnContainer(event, menuItem)
         )
         menuItems.push(menuItem)
-        if (p.isDefaultProject()) {
+        if (p.isDefaultProject) {
           defaultGroup.append(menuItem.getMenuItem())
         } else {
           customGroup.append(menuItem.getMenuItem())
