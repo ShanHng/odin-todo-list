@@ -1,16 +1,30 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   mode: 'development',
   entry: {
-    index: './src/index.js',
+    index: './src/index.js'
   },
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Tada!',
-      template: './src/index.html',
+      template: './src/index.html'
     }),
+    new CopyWebpackPlugin({
+      // Specify the paths to the Font Awesome JS files
+      patterns: [
+        {
+          from: './node_modules/@fortawesome/fontawesome-free/js/solid.js',
+          to: 'solid.js'
+        },
+        {
+          from: './node_modules/@fortawesome/fontawesome-free/js/fontawesome.js',
+          to: 'fontawesome.js'
+        }
+      ]
+    })
   ],
   devtool: 'inline-source-map',
   output: {
